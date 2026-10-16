@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- E6-S2: sample people for a demo. Same rules as the movie seed: "seed" context only, only when the table is
+     empty, ids from 100001 so the credits seeded in movie-service point at the right people. -->
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="0099-seed-people" author="ajain" contextFilter="seed">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">SELECT COUNT(*) FROM person</sqlCheck>
+        </preConditions>
+        <insert tableName="person">
+            <column name="id" valueNumeric="100001"/>
+            <column name="name" value="Christopher Nolan"/>
+            <column name="bio" value="British-American director known for puzzle-box blockbusters."/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="person">
+            <column name="id" valueNumeric="100002"/>
+            <column name="name" value="Leonardo DiCaprio"/>
+            <column name="bio" value="American actor; Inception, The Revenant."/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="person">
+            <column name="id" valueNumeric="100003"/>
+            <column name="name" value="Christian Bale"/>
+            <column name="bio" value="Welsh actor; played Batman in The Dark Knight trilogy."/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="person">
+            <column name="id" valueNumeric="100004"/>
+            <column name="name" value="Heath Ledger"/>
+            <column name="bio" value="Australian actor; the Joker in The Dark Knight."/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="person">
+            <column name="id" valueNumeric="100005"/>
+            <column name="name" value="Matthew McConaughey"/>
+            <column name="bio" value="American actor; Interstellar, Dallas Buyers Club."/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="person">
+            <column name="id" valueNumeric="100006"/>
+            <column name="name" value="Anne Hathaway"/>
+            <column name="bio" value="American actress; Interstellar, Les Miserables."/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="person">
+            <column name="id" valueNumeric="100007"/>
+            <column name="name" value="Quentin Tarantino"/>
+            <column name="bio" value="American director and writer; Pulp Fiction."/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="person">
+            <column name="id" valueNumeric="100008"/>
+            <column name="name" value="John Travolta"/>
+            <column name="bio" value="American actor; Pulp Fiction, Grease."/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="person">
+            <column name="id" valueNumeric="100009"/>
+            <column name="name" value="Uma Thurman"/>
+            <column name="bio" value="American actress; Pulp Fiction, Kill Bill."/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="person">
+            <column name="id" valueNumeric="100010"/>
+            <column name="name" value="Lana Wachowski"/>
+            <column name="bio" value="American director and writer; The Matrix."/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="person">
+            <column name="id" valueNumeric="100011"/>
+            <column name="name" value="Keanu Reeves"/>
+            <column name="bio" value="Canadian actor; The Matrix, John Wick."/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="person">
+            <column name="id" valueNumeric="100012"/>
+            <column name="name" value="Bong Joon-ho"/>
+            <column name="bio" value="South Korean director and writer; Parasite."/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="person">
+            <column name="id" valueNumeric="100013"/>
+            <column name="name" value="Song Kang-ho"/>
+            <column name="bio" value="South Korean actor; Parasite, Memories of Murder."/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="person">
+            <column name="id" valueNumeric="100014"/>
+            <column name="name" value="Hayao Miyazaki"/>
+            <column name="bio" value="Japanese director and writer; Spirited Away."/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="person">
+            <column name="id" valueNumeric="100015"/>
+            <column name="name" value="Francis Ford Coppola"/>
+            <column name="bio" value="American director; The Godfather trilogy."/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="person">
+            <column name="id" valueNumeric="100016"/>
+            <column name="name" value="Marlon Brando"/>
+            <column name="bio" value="American actor; The Godfather, On the Waterfront."/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="person">
+            <column name="id" valueNumeric="100017"/>
+            <column name="name" value="Al Pacino"/>
+            <column name="bio" value="American actor; The Godfather, Scarface."/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="person">
+            <column name="id" valueNumeric="100018"/>
+            <column name="name" value="Ridley Scott"/>
+            <column name="bio" value="British director; Alien, Gladiator."/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="person">
+            <column name="id" valueNumeric="100019"/>
+            <column name="name" value="Sigourney Weaver"/>
+            <column name="bio" value="American actress; Alien, Avatar."/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="person">
+            <column name="id" valueNumeric="100020"/>
+            <column name="name" value="Damien Chazelle"/>
+            <column name="bio" value="American director and writer; La La Land, Whiplash."/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

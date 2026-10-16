@@ -1,0 +1,74 @@
+spring:
+  profiles:
+    default: local        # no profile given = local laptop run
+  application:
+    name: movie-service
+  datasource:
+    # Relative to the module directory where bootRun runs, so the file lands in backend/data/ (application-architecture 4.5)
+    url: jdbc:h2:file:../data/movie;MODE=PostgreSQL;TRACE_LEVEL_FILE=0
+    username: sa
+    password: ""
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate      # Liquibase owns the schema; Hibernate only checks it
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+    contexts: schema      # no changeset is tagged "schema"; the filter only needs to be non-empty, because an empty one runs every changeset, seed included
+  graphql:
+    schema:
+      locations: classpath*:graphql/**/   # classpath* merges every graphql/ folder (main + test extensions)
+    graphiql:
+      enabled: true           # /graphiql explorer (foundation checklist B)
+  grpc:
+    client:
+      channel:
+        people:
+          target: localhost:9090
+
+  servlet:
+    multipart:
+      max-file-size: 10MB       # same limit as moviehub.posters.max-size; Spring rejects bigger uploads before our code runs
+      max-request-size: 11MB
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+moviehub:
+  posters:
+    dir: ../data/posters
+    max-size: 10MB
+  cors:
+    allowed-origins: http://localhost:5173   # SvelteKit dev server; empty list = CORS off
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  liquibase:
+    contexts: schema,seed   # E6-S2: sample data on a laptop, never in tests
+logging:
+  structured:
+    format:
+      console: ecs      # one JSON line per event, MDC (requestId) included (application-architecture 4.3)
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:h2:mem:movie-test;MODE=PostgreSQL
+  graphql:
+    graphiql:
+      enabled: false
+moviehub:
+  posters:
+    dir: ${java.io.tmpdir}/moviehub-test-posters   # never the real folder

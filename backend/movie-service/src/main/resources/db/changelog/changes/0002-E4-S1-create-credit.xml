@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- E4-S1: credits link a movie to a person with a role. person_id has no foreign key: people live in the other
+     service's database (application-architecture section 1). One person can hold several roles on one movie, but
+     not the same role twice. Deleting a movie removes its credits at the database level. -->
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="0002-create-credit" author="ajain">
+        <createTable tableName="credit">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="movie_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_credit_movie" references="movie(id)" deleteCascade="true"/>
+            </column>
+            <column name="person_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addUniqueConstraint tableName="credit" columnNames="movie_id, person_id, role" constraintName="uq_credit_movie_person_role"/>
+    </changeSet>
+
+</databaseChangeLog>

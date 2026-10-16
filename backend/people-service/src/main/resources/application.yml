@@ -1,0 +1,51 @@
+spring:
+  profiles:
+    default: local        # no profile given = local laptop run
+  application:
+    name: people-service
+  datasource:
+    url: jdbc:h2:file:../data/people;MODE=PostgreSQL;TRACE_LEVEL_FILE=0
+    username: sa
+    password: ""
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+    contexts: schema      # no changeset is tagged "schema"; the filter only needs to be non-empty, because an empty one runs every changeset, seed included
+  grpc:
+    server:
+      port: 9090
+
+server:
+  port: 8081          # actuator only; the business API is gRPC on 9090
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  liquibase:
+    contexts: schema,seed   # E6-S2: sample data on a laptop, never in tests
+logging:
+  structured:
+    format:
+      console: ecs      # one JSON line per event, MDC (requestId) included (application-architecture 4.3)
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:h2:mem:people-test;MODE=PostgreSQL
+  grpc:
+    server:
+      port: 0         # random free port in tests

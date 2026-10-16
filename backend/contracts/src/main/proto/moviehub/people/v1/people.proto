@@ -1,0 +1,36 @@
+// Contract between movie-service (client) and people-service (server).
+// Messages are nouns, RPCs are verbs, every RPC has its own request message (coding-standards.md).
+syntax = "proto3";
+
+package moviehub.people.v1;
+
+option java_multiple_files = true;
+option java_package = "com.moviehub.contracts.people.v1";
+
+import "google/protobuf/empty.proto";
+
+service PeopleService {
+  rpc GetPerson    (GetPersonRequest)    returns (Person);
+  rpc GetPeople    (GetPeopleRequest)    returns (PeopleList);   // batch by ids, used to resolve movie credits
+  rpc ListPeople   (ListPeopleRequest)   returns (PeopleList);
+  rpc SearchPeople (SearchPeopleRequest) returns (PeopleList);
+  rpc CreatePerson (CreatePersonRequest) returns (Person);
+  rpc UpdatePerson (UpdatePersonRequest) returns (Person);
+  rpc DeletePerson (DeletePersonRequest) returns (google.protobuf.Empty);
+}
+
+message Person {
+  int64  id   = 1;
+  string name = 2;
+  string bio  = 3;   // empty string when not set
+}
+
+message PeopleList { repeated Person people = 1; }
+
+message GetPersonRequest    { int64 id = 1; }
+message GetPeopleRequest    { repeated int64 ids = 1; }
+message ListPeopleRequest   {}
+message SearchPeopleRequest { string text = 1; }
+message CreatePersonRequest { string name = 1; string bio = 2; }
+message UpdatePersonRequest { int64 id = 1; string name = 2; string bio = 3; }
+message DeletePersonRequest { int64 id = 1; }

@@ -1,0 +1,100 @@
+# Schema first: this file is the contract with the frontend (coding-standards.md, GraphQL).
+# It grows one story at a time. The full target shape is in application-architecture.md section 2.
+
+type Movie {
+  id: ID!
+  title: String!
+  releaseYear: Int!
+  synopsis: String
+  "Relative to movie-service, e.g. /posters/42.jpg; null until a poster is uploaded (E3)"
+  posterUrl: String
+  "E4-S1: who worked on it; people are fetched from people-service when this field is asked for"
+  credits: [Credit!]!
+}
+
+"Cast is ACTOR; the other roles are creators"
+enum Role { ACTOR DIRECTOR WRITER PRODUCER }
+
+type Credit {
+  id: ID!
+  role: Role!
+  person: Person!
+}
+
+type Person {
+  id: ID!
+  name: String!
+  bio: String
+  "E4-S3: the movies they worked on, newest first; resolved only when asked for"
+  credits: [PersonCredit!]!
+}
+
+"A credit seen from the person's side (E4-S3)"
+type PersonCredit {
+  id: ID!
+  role: Role!
+  movie: Movie!
+}
+
+"The grid's sort choices (E6-S1)"
+enum MovieSort { TITLE_ASC TITLE_DESC YEAR_ASC YEAR_DESC }
+
+"One page of the grid (E2-S6). total is the number of movies across all pages."
+type MoviePage {
+  items: [Movie!]!
+  page: Int!
+  size: Int!
+  total: Int!
+}
+
+"E5-S1: one search box, two groups (ADR 0005)"
+type SearchResult {
+  movies: [Movie!]!
+  people: [Person!]!
+}
+
+input MovieInput {
+  title: String!
+  releaseYear: Int!
+  synopsis: String
+}
+
+input PersonInput {
+  name: String!
+  bio: String
+}
+
+type Query {
+  ping: String!
+  "E2-S1 + E2-S6 + E6-S1: one page of movies in the chosen order, title A to Z by default"
+  movies(page: Int = 0, size: Int = 12, sort: MovieSort = TITLE_ASC): MoviePage!
+  "E2-S2: one movie; a missing id answers an error with code NOT_FOUND"
+  movie(id: ID!): Movie
+  "E1-S1: all cast and creators, sorted by name"
+  people: [Person!]!
+  "E1-S3: one person; a missing id answers an error with code NOT_FOUND"
+  person(id: ID!): Person
+  "E4-S1 picker: people whose name contains the text, case-insensitive"
+  searchPeople(text: String!): [Person!]!
+  "E5-S1: movies by title and people by name, partial and case-insensitive"
+  search(text: String!): SearchResult!
+}
+
+type Mutation {
+  "E2-S3: add a movie; title and year are validated (1888 .. this year + 5)"
+  createMovie(input: MovieInput!): Movie!
+  "E2-S4: edit a movie; NOT_FOUND if deleted meanwhile"
+  updateMovie(id: ID!, input: MovieInput!): Movie!
+  "E2-S5: delete a movie; true on success, NOT_FOUND if already gone"
+  deleteMovie(id: ID!): Boolean!
+  "E1-S2: add a cast member or creator"
+  createPerson(input: PersonInput!): Person!
+  "E1-S3: edit a person; NOT_FOUND if deleted meanwhile"
+  updatePerson(id: ID!, input: PersonInput!): Person!
+  "E1-S4 + E4-S3: delete a person and their credits; true on success, NOT_FOUND if already gone"
+  deletePerson(id: ID!): Boolean!
+  "E4-S1: credit a person on a movie; CONFLICT if that person already holds that role there"
+  addCredit(movieId: ID!, personId: ID!, role: Role!): Credit!
+  "E4-S2: remove a credit; the person stays. NOT_FOUND if already gone"
+  removeCredit(id: ID!): Boolean!
+}

@@ -1,0 +1,26 @@
+# Single place for every version we pin ourselves.
+# Anything Spring Boot manages (gRPC, protobuf, Liquibase, H2, JUnit, Kotlin stdlib) is NOT listed here on purpose:
+# the Boot BOM owns it, see docs/03-architecture/technical-architecture.md section 5.
+
+[versions]
+kotlin = "2.3.21"            # same line Boot 4.1.1 manages for kotlin-stdlib
+springBoot = "4.1.1"
+springDependencyManagement = "1.1.7"
+protobufPlugin = "0.10.0"
+protoc = "4.35.1"            # matches Boot-managed protobuf-java
+grpcGen = "1.83.1"           # matches Boot-managed grpc-* (protoc-gen-grpc-java)
+mockk = "1.14.11"
+springdoc = "3.1.1"           # Swagger UI for the REST upload endpoint; 3.x line targets Spring Boot 4
+
+[libraries]
+spring-boot-bom = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "springBoot" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+springdoc-ui = { module = "org.springdoc:springdoc-openapi-starter-webmvc-ui", version.ref = "springdoc" }
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
+kotlin-jpa = { id = "org.jetbrains.kotlin.plugin.jpa", version.ref = "kotlin" }
+spring-boot = { id = "org.springframework.boot", version.ref = "springBoot" }
+spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "springDependencyManagement" }
+protobuf = { id = "com.google.protobuf", version.ref = "protobufPlugin" }

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="450" viewBox="0 0 300 450">
+  <rect width="300" height="450" fill="#78350f"/>
+  <rect x="16" y="16" width="268" height="418" fill="none" stroke="#fff" stroke-opacity="0.35" stroke-width="2"/>
+  <text x="150" y="276" text-anchor="middle" font-family="system-ui, sans-serif" font-size="34" font-weight="700" fill="#fff">The</text><text x="150" y="324" text-anchor="middle" font-family="system-ui, sans-serif" font-size="34" font-weight="700" fill="#fff">Godfather</text>
+  <text x="150" y="400" text-anchor="middle" font-family="system-ui, sans-serif" font-size="22" fill="#fff" fill-opacity="0.8">1972</text>
+</svg>

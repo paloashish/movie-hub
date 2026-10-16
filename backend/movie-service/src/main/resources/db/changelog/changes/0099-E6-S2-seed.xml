@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- E6-S2: sample catalogue for a demo. Runs only in the "seed" context (the local profile) and only when the
+     movie table is empty; Liquibase then records it and never runs it again. Ids start at 100001 so they never
+     collide with rows the identity column hands out, and so credits line up with the people seeded in
+     people-service by the same ids (application-architecture 4.6). Posters are our own SVGs on the classpath. -->
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="0099-seed-movies-and-credits" author="ajain" contextFilter="seed">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">SELECT COUNT(*) FROM movie</sqlCheck>
+        </preConditions>
+        <insert tableName="movie">
+            <column name="id" valueNumeric="100001"/>
+            <column name="title" value="Inception"/>
+            <column name="release_year" valueNumeric="2010"/>
+            <column name="synopsis" value="A thief who steals secrets through dream-sharing is offered a chance to have his past erased."/>
+            <column name="poster_url" value="/posters/seed-100001.svg?v=1"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="movie">
+            <column name="id" valueNumeric="100002"/>
+            <column name="title" value="The Dark Knight"/>
+            <column name="release_year" valueNumeric="2008"/>
+            <column name="synopsis" value="Batman faces the Joker, a criminal mastermind who plunges Gotham into chaos."/>
+            <column name="poster_url" value="/posters/seed-100002.svg?v=1"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="movie">
+            <column name="id" valueNumeric="100003"/>
+            <column name="title" value="Interstellar"/>
+            <column name="release_year" valueNumeric="2014"/>
+            <column name="synopsis" value="Explorers travel through a wormhole in search of a new home for humanity."/>
+            <column name="poster_url" value="/posters/seed-100003.svg?v=1"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="movie">
+            <column name="id" valueNumeric="100004"/>
+            <column name="title" value="Pulp Fiction"/>
+            <column name="release_year" valueNumeric="1994"/>
+            <column name="synopsis" value="The lives of two hit men, a boxer and a gangster&#x27;s wife intertwine in Los Angeles."/>
+            <column name="poster_url" value="/posters/seed-100004.svg?v=1"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="movie">
+            <column name="id" valueNumeric="100005"/>
+            <column name="title" value="The Matrix"/>
+            <column name="release_year" valueNumeric="1999"/>
+            <column name="synopsis" value="A hacker learns the truth about his reality and his role in the war against its controllers."/>
+            <column name="poster_url" value="/posters/seed-100005.svg?v=1"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="movie">
+            <column name="id" valueNumeric="100006"/>
+            <column name="title" value="Parasite"/>
+            <column name="release_year" valueNumeric="2019"/>
+            <column name="synopsis" value="A poor family schemes to become employed by a wealthy household."/>
+            <column name="poster_url" value="/posters/seed-100006.svg?v=1"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="movie">
+            <column name="id" valueNumeric="100007"/>
+            <column name="title" value="Spirited Away"/>
+            <column name="release_year" valueNumeric="2001"/>
+            <column name="synopsis" value="A girl wanders into a world of spirits and must work to free herself and her parents."/>
+            <column name="poster_url" value="/posters/seed-100007.svg?v=1"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="movie">
+            <column name="id" valueNumeric="100008"/>
+            <column name="title" value="The Godfather"/>
+            <column name="release_year" valueNumeric="1972"/>
+            <column name="synopsis" value="The ageing patriarch of a crime dynasty hands control to his reluctant son."/>
+            <column name="poster_url" value="/posters/seed-100008.svg?v=1"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="movie">
+            <column name="id" valueNumeric="100009"/>
+            <column name="title" value="Alien"/>
+            <column name="release_year" valueNumeric="1979"/>
+            <column name="synopsis" value="The crew of a commercial starship encounters a deadly lifeform."/>
+            <column name="poster_url" value="/posters/seed-100009.svg?v=1"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="movie">
+            <column name="id" valueNumeric="100010"/>
+            <column name="title" value="La La Land"/>
+            <column name="release_year" valueNumeric="2016"/>
+            <column name="synopsis" value="A jazz pianist and an aspiring actress fall in love while chasing their dreams."/>
+            <column name="poster_url" value="/posters/seed-100010.svg?v=1"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="credit">
+            <column name="id" valueNumeric="100001"/>
+            <column name="movie_id" valueNumeric="100001"/>
+            <column name="person_id" valueNumeric="100001"/>
+            <column name="role" value="DIRECTOR"/>
+        </insert>
+        <insert tableName="credit">
+            <column name="id" valueNumeric="100002"/>
+            <column name="movie_id" valueNumeric="100001"/>
+            <column name="person_id" valueNumeric="100001"/>
+            <column name="role" value="WRITER"/>
+        </insert>
+        <insert tableName="credit">
+            <column name="id" valueNumeric="100003"/>
+            <column name="movie_id" valueNumeric="100001"/>
+            <column name="person_id" valueNumeric="100002"/>
+            <column name="role" value="ACTOR"/>
+        </insert>
+        <insert tableName="credit">
+            <column name="id" valueNumeric="100004"/>
+            <column name="movie_id" valueNumeric="100002"/>
+            <column name="person_id" valueNumeric="100001"/>
+            <column name="role" value="DIRECTOR"/>
+        </insert>
+        <insert tableName="credit">
+            <column name="id" valueNumeric="100005"/>
+            <column name="movie_id" valueNumeric="100002"/>
+            <column name="person_id" valueNumeric="100003"/>
+            <column name="role" value="ACTOR"/>
+        </insert>
+        <insert tableName="credit">
+            <column name="id" valueNumeric="100006"/>
+            <column name="movie_id" valueNumeric="100002"/>
+            <column name="person_id" valueNumeric="100004"/>
+            <column name="role" value="ACTOR"/>
+        </insert>
+        <insert tableName="credit">
+            <column name="id" valueNumeric="100007"/>
+            <column name="movie_id" valueNumeric="100003"/>
+            <column name="person_id" valueNumeric="100001"/>
+            <column name="role" value="DIRECTOR"/>
+        </insert>
+        <insert tableName="credit">
+            <column name="id" valueNumeric="100008"/>
+            <column name="movie_id" valueNumeric="100003"/>
+            <column name="person_id" valueNumeric="100005"/>
+            <column name="role" value="ACTOR"/>
+        </insert>
+        <insert tableName="credit">
+            <column name="id" valueNumeric="100009"/>
+            <column name="movie_id" valueNumeric="100003"/>
+            <column name="person_id" valueNumeric="100006"/>
+            <column name="role" value="ACTOR"/>
+        </insert>
+        <insert tableName="credit">
+            <column name="id" valueNumeric="100010"/>
+            <column name="movie_id" valueNumeric="100004"/>
+            <column name="person_id" valueNumeric="100007"/>
+            <column name="role" value="DIRECTOR"/>
+        </insert>
+        <insert tableName="credit">
+            <column name="id" valueNumeric="100011"/>
+            <column name="movie_id" valueNumeric="100004"/>
+            <column name="person_id" valueNumeric="100007"/>
+            <column name="role" value="WRITER"/>
+        </insert>
+        <insert tableName="credit">
+            <column name="id" valueNumeric="100012"/>
+            <column name="movie_id" valueNumeric="100004"/>
+            <column name="person_id" valueNumeric="100008"/>
+            <column name="role" value="ACTOR"/>
+        </insert>
+        <insert tableName="credit">
+            <column name="id" valueNumeric="100013"/>
+            <column name="movie_id" valueNumeric="100004"/>
+            <column name="person_id" valueNumeric="100009"/>
+            <column name="role" value="ACTOR"/>
+        </insert>
+        <insert tableName="credit">
+            <column name="id" valueNumeric="100014"/>
+            <column name="movie_id" valueNumeric="100005"/>
+            <column name="person_id" valueNumeric="100010"/>
+            <column name="role" value="DIRECTOR"/>
+        </insert>
+        <insert tableName="credit">
+            <column name="id" valueNumeric="100015"/>
+            <column name="movie_id" valueNumeric="100005"/>
+            <column name="person_id" valueNumeric="100010"/>
+            <column name="role" value="WRITER"/>
+        </insert>
+        <insert tableName="credit">
+            <column name="id" valueNumeric="100016"/>
+            <column name="movie_id" valueNumeric="100005"/>
+            <column name="person_id" valueNumeric="100011"/>
+            <column name="role" value="ACTOR"/>
+        </insert>
+        <insert tableName="credit">
+            <column name="id" valueNumeric="100017"/>
+            <column name="movie_id" valueNumeric="100006"/>
+            <column name="person_id" valueNumeric="100012"/>
+            <column name="role" value="DIRECTOR"/>
+        </insert>
+        <insert tableName="credit">
+            <column name="id" valueNumeric="100018"/>
+            <column name="movie_id" valueNumeric="100006"/>
+            <column name="person_id" valueNumeric="100012"/>
+            <column name="role" value="WRITER"/>
+        </insert>
+        <insert tableName="credit">
+            <column name="id" valueNumeric="100019"/>
+            <column name="movie_id" valueNumeric="100006"/>
+            <column name="person_id" valueNumeric="100013"/>
+            <column name="role" value="ACTOR"/>
+        </insert>
+        <insert tableName="credit">
+            <column name="id" valueNumeric="100020"/>
+            <column name="movie_id" valueNumeric="100007"/>
+            <column name="person_id" valueNumeric="100014"/>
+            <column name="role" value="DIRECTOR"/>
+        </insert>
+        <insert tableName="credit">
+            <column name="id" valueNumeric="100021"/>
+            <column name="movie_id" valueNumeric="100007"/>
+            <column name="person_id" valueNumeric="100014"/>
+            <column name="role" value="WRITER"/>
+        </insert>
+        <insert tableName="credit">
+            <column name="id" valueNumeric="100022"/>
+            <column name="movie_id" valueNumeric="100008"/>
+            <column name="person_id" valueNumeric="100015"/>
+            <column name="role" value="DIRECTOR"/>
+        </insert>
+        <insert tableName="credit">
+            <column name="id" valueNumeric="100023"/>
+            <column name="movie_id" valueNumeric="100008"/>
+            <column name="person_id" valueNumeric="100016"/>
+            <column name="role" value="ACTOR"/>
+        </insert>
+        <insert tableName="credit">
+            <column name="id" valueNumeric="100024"/>
+            <column name="movie_id" valueNumeric="100008"/>
+            <column name="person_id" valueNumeric="100017"/>
+            <column name="role" value="ACTOR"/>
+        </insert>
+        <insert tableName="credit">
+            <column name="id" valueNumeric="100025"/>
+            <column name="movie_id" valueNumeric="100009"/>
+            <column name="person_id" valueNumeric="100018"/>
+            <column name="role" value="DIRECTOR"/>
+        </insert>
+        <insert tableName="credit">
+            <column name="id" valueNumeric="100026"/>
+            <column name="movie_id" valueNumeric="100009"/>
+            <column name="person_id" valueNumeric="100019"/>
+            <column name="role" value="ACTOR"/>
+        </insert>
+        <insert tableName="credit">
+            <column name="id" valueNumeric="100027"/>
+            <column name="movie_id" valueNumeric="100010"/>
+            <column name="person_id" valueNumeric="100020"/>
+            <column name="role" value="DIRECTOR"/>
+        </insert>
+        <insert tableName="credit">
+            <column name="id" valueNumeric="100028"/>
+            <column name="movie_id" valueNumeric="100010"/>
+            <column name="person_id" valueNumeric="100020"/>
+            <column name="role" value="WRITER"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

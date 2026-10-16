@@ -1,0 +1,8 @@
+# Test-only fields so the error mapping can be exercised end to end without a real story.
+extend type Query {
+  throwNotFound: String
+  throwValidation: String
+  throwConflict: String
+  throwUnavailable: String
+  throwUnexpected: String
+}
