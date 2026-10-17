@@ -2,12 +2,23 @@
 
 | | |
 |---|---|
-| Version | 0.1 |
-| Status | Reviewed, draft accepted |
-| Date | 2026-10-09 |
+| Version | 0.2 |
+| Status | Reviewed, draft accepted; C4 note added 2026-10-17 |
 | Inputs | `docs/01-business/brd.md`, `docs/02-requirements/epics-and-stories.md` |
 
 System design answers one question: what are the big pieces and how do they talk? Details of technology and code structure live in the technical and application architecture documents.
+
+## The C4 model, and where each level lives
+
+C4 draws a software system at four zoom levels, each for a different reader: **Context** (the system as one box, its users and the systems it depends on), **Containers** (the separately runnable pieces: apps, services, databases), **Components** (the main building blocks inside one container) and **Code** (classes, usually generated from the code rather than drawn). Each level adds detail; a reader stops at the one that answers their question.
+
+| C4 level | Here | Reader |
+|----------|------|--------|
+| 1. Context | Section 1 below | Anyone: what is this and who uses it |
+| 2. Containers | Section 2 below, plus the sequence diagrams in section 3 | A reviewer or new developer: what runs and how the pieces talk |
+| 3. Components | `application-architecture.md` section 3: the layers inside each service (`api`, `service`, `repository`, `client`) | A developer about to change a service |
+| 4. Code | Not drawn; see section 6 | A developer reading the code |
+
 
 ## 1. Context - who uses the system and what it depends on
 
@@ -139,3 +150,9 @@ Deleting a person must also remove their credits, which live in movie-service. T
 ## 5. Out of scope for this design
 
 Authentication, multiple instances of a service, message queues, caching layers, cloud storage, a server database. All are possible later without changing the container boundaries.
+
+## 6. The two C4 levels not drawn here
+
+**Components** are drawn once, in `application-architecture.md` section 3, rather than repeated in this document: the diagram shows the four layers inside each service and the one gRPC edge between them, which is the component view C4 asks for. The web app has no component diagram; its structure is a folder tree in section 5 of the same document, which says the same thing for a SvelteKit app in fewer lines.
+
+**Code** diagrams are deliberately not drawn. C4 itself recommends generating them from the code on demand rather than keeping them by hand, and this codebase is small enough that the IDE's class view or a `find` over the service packages gives the same picture. The data model, the one code-level picture worth keeping, is the ER diagram in `application-architecture.md` section 1. A generated class diagram per service is listed in `docs/04-engineering/backlog.md` as an idea, not a gap.

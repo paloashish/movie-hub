@@ -3,7 +3,6 @@
 | | |
 |---|---|
 | Version | 0.1 |
-| Date | 2026-10-09 |
 | Status | Reviewed, draft accepted |
 | Source | `docs/01-business/brd.md` |
 | Personas | Catalogue manager (CM), Visitor (V) |

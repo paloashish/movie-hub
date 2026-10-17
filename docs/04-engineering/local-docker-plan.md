@@ -1,6 +1,6 @@
 # Local Docker Plan
 
-> **Status:** implemented and runtime-verified on 2026-10-12. `make docker-verify` passes on native Apple Silicon images. Docker remains optional, and the JDK + Node workflow stays the default.
+> **Status:** implemented and runtime-verified on 2026-10-16. `make docker-verify` passes on native Apple Silicon images. Docker remains optional, and the JDK + Node workflow stays the default.
 
 ## Recommendation
 

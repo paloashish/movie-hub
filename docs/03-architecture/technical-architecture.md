@@ -4,14 +4,13 @@
 | ------- | --------------------------------------------- |
 | Version | 0.1                                           |
 | Status  | Reviewed, draft accepted                      |
-| Date    | 2026-10-09                                    |
 | Inputs  | `system-design.md`, the brief, ADRs 0001-0005 |
 
 Technical architecture answers: which technologies, which versions, how they are wired, and how the whole thing runs on a laptop. Code structure inside each piece is in `application-architecture.md`.
 
 ## 1. Stack and versions
 
-Versions were looked up on 2026-10-09 (sources at the end). Rule: prefer the current stable line that the Spring Boot BOM or the official scaffolder gives us, not the newest number. Where Spring Boot manages a version, we do not pin it ourselves.
+Versions were looked up (sources at the end). Rule: prefer the current stable line that the Spring Boot BOM or the official scaffolder gives us, not the newest number. Where Spring Boot manages a version, we do not pin it ourselves.
 
 | Layer            | Technology                                 | Version                | Who pins it                      | Note                                                                                                                                     |
 | ---------------- | ------------------------------------------ | ---------------------- | -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
@@ -49,7 +48,7 @@ flowchart LR
         B[Browser]:::fe
         subgraph procs [three local processes]
             FE[frontend<br/>SvelteKit :5173]:::fe
-            MS[movie-service<br/>HTTP :8080<br/>GraphQL /graphql<br/>upload /movies/{id}/poster]:::svc
+            MS["movie-service<br/>HTTP :8080<br/>GraphQL /graphql<br/>upload /movies/{id}/poster"]:::svc
             PS[people-service<br/>gRPC :9090<br/>health HTTP :8081]:::svc
             DBM[(backend/data/movie.mv.db)]:::db
             DBP[(backend/data/people.mv.db)]:::db

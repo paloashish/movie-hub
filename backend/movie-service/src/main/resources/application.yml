@@ -58,6 +58,11 @@ logging:
   structured:
     format:
       console: ecs      # one JSON line per event, MDC (requestId) included (application-architecture 4.3)
+      file: ecs         # the file gets the same JSON lines
+  file:
+    # Next to the databases, so backend/data/ holds all runtime output and make reset clears it.
+    # Spring Boot rotates at 10 MB and keeps 7 days by default. Docker overrides this path (compose.yaml).
+    name: ../data/logs/movie-service.log
 
 ---
 spring:

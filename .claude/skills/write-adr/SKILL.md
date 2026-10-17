@@ -44,5 +44,6 @@ description: Write an Architecture Decision Record for Movie Hub in docs/03-arch
 2. Context must cite the brief or a BRD/story ID.
 3. Always include at least one rejected option with a real reason.
 4. Plain words; a beginner must be able to follow it.
-5. Add the ADR to the list in `docs/03-architecture/README.md` if that file exists.
-6. Append a row to `docs/05-ai/ai-usage.md`.
+5. Add the ADR to the lists in `docs/03-architecture/README.md` and `system-design.md` section 4.
+6. Never edit or renumber an accepted ADR. A changed decision is a new ADR whose Status says `Supersedes NNNN`; the old one gets `Superseded by NNNN` and keeps its text, so the history of the decision stays readable.
+7. Append a row to the author's private AI usage log (`docs/05-ai/ai-usage.md`, git-ignored).

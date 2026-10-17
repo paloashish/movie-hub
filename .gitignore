@@ -22,3 +22,11 @@ frontend/build/
 *.iml
 .vscode/
 .DS_Store
+
+# Author-only notes, not part of the submission: learning journal, project journey, study guides
+docs/06-learning/
+docs/07-guide/
+docs/05-ai/ai-usage.md
+
+# Cache written by the /graphify skill; regenerated on demand
+graphify-out/

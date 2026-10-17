@@ -2,7 +2,7 @@
 
 Links used to pick the versions in `technical-architecture.md`. Re-check before any upgrade.
 
-## Checked 2026-10-09
+## Checked
 
 - Spring Boot releases: https://github.com/spring-projects/spring-boot/releases/tag/v4.1.1 and https://endoflife.date/spring-boot
 - Spring Boot 4.1 release notes (gRPC auto-config, Kotlin 2.3, JUnit 6): https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-4.1-Release-Notes and https://www.infoq.com/news/2026/06/spring-boot-4-1/

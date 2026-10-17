@@ -3,7 +3,6 @@
 | | |
 |---|---|
 | Version | 0.1 (draft) |
-| Date | 2026-10-09 |
 | Status | Reviewed, draft accepted |
 | Source | `docs/00-start-here/brief/Technical-Assessment.pdf` |
 

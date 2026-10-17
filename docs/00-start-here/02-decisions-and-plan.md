@@ -1,6 +1,6 @@
 # Decisions and Delivery Plan
 
-> **Status (2026-10-12):** Phase 0 done except git. Phase 1 foundations and Phase 2's 21 stories are complete, code-reviewed and verified (`make verify`: 50 checks, 225 backend + 191 frontend tests). Phase 3 has the final README and study guides 01-05; optional local Docker is implemented and `make docker-verify` passes. Deferred items live in `docs/04-engineering/backlog.md`; the demo script, Docker browser walkthrough and git init are parked there. Checkboxes below are the detailed status.
+> **Status (2026-10-16):** Phase 0 done; git initialised on 2026-10-16 (one commit, main). Phase 1 foundations and Phase 2's 21 stories are complete, code-reviewed and verified (`make verify`: 50 checks, 225 backend + 191 frontend tests). Phase 3 has the final README, a README in every code folder, the demo script and the AI tooling map; optional local Docker is implemented and `make docker-verify` passes; both services write a JSON log file under `backend/data/logs/`. Deferred items live in `docs/04-engineering/backlog.md`; the Docker browser walkthrough is parked there. Checkboxes below are the detailed status.
 
 ## Guiding principle
 
@@ -21,7 +21,7 @@ Decisions 1 to 5, 9 and 10 are architecture decisions and get an ADR (0001 to 00
 | 5   | **Search is a database query** (case-insensitive `LIKE` on title/name)                                                                                                                                                         | Good enough for the data size; no search engine to run or explain                                                                                                                                                           |
 | 6   | **Diagrams are Mermaid blocks inside Markdown**                                                                                                                                                                                | Render on GitHub, no tooling, easy to keep up to date                                                                                                                                                                       |
 | 7   | **Tooling:** Gradle multi-project (Kotlin DSL) for backend with a shared `contracts` module that generates gRPC stubs; npm + SvelteKit for frontend; JUnit 6 + MockK on backend; Vitest + Testing Library on frontend          | Standard, well-documented choices with minimal setup                                                                                                                                                                        |
-| 8   | **AI usage is structured:** root `CLAUDE.md`, small skills (write-stories, write-adr, implement-story, gen-tests, verify, ship-story), two agents (reviewer, code-reviewer), an `ai-usage.md` log, commits reference story IDs | Shows AI as a disciplined productivity aid and gives the walkthrough a trail to follow                                                                                                                                      |
+| 8   | **AI usage is structured:** root `CLAUDE.md`, small skills (write-stories, write-adr, implement-story, gen-tests, verify, ship-story), two agents (reviewer, code-reviewer), a tooling map, commits reference story IDs | Shows AI as a disciplined productivity aid and gives the walkthrough a trail to follow                                                                                                                                      |
 | 9   | **Java blocking gRPC stubs called from Kotlin;** grpc-kotlin coroutine stubs are not used (ADR 0006)                                                                                                                           | Fewer moving parts; the brief asks for Kotlin services, not Kotlin stubs                                                                                                                                                    |
 | 10  | **One error hierarchy with one error code per boundary;** RFC 9457 problem details for the upload endpoint (ADR 0007)                                                                                                          | Every story reuses the same mapping; the frontend handles one error shape                                                                                                                                                   |
 
@@ -32,14 +32,14 @@ Decisions 1 to 5, 9 and 10 are architecture decisions and get an ADR (0001 to 00
 Output: a reviewable set of documents before any code exists.
 
 - [x] Start-here docs: summary, decisions, layout, research notes
-- [x] AI tooling: `CLAUDE.md`, AI usage log, learning notes, project journey
+- [x] AI tooling: `CLAUDE.md`, tooling map
 - [x] Business Requirements Document (one page): goals, scope, out of scope, personas, success criteria
 - [x] Six epics with short user stories and acceptance criteria, in one file (reviewed)
 - [x] System design (context and container diagrams), technical architecture (stack, versions, wiring), application architecture (data model, contracts, layers, cross-cutting patterns) - reviewed
 - [x] ADRs 0001-0007 via `/write-adr` (reviewed)
 - [x] UI design (one page): how screens derive from the brief, app shell, screen map, text wireframes, responsive rules, feedback states per screen (added after E1-S1 when the gap was noticed; reviewer pending)
 - [x] Skills and agents: write-stories, write-adr, implement-story, gen-tests, reviewer, code-reviewer
-- [ ] `git init` and first commit (parked by the author on 2026-10-12; action item in `docs/04-engineering/backlog.md`)
+- [x] `git init` and first commit (2026-10-16, branch `main`, 334 files, nothing from `backend/data/`, builds or `node_modules`)
 
 ### Phase 1 - Foundation
 
@@ -92,9 +92,8 @@ Each story is delivered with `/ship-story <ID>`: built end to end with the `impl
 
 - [x] Edge-case tests on every service and component (covered story by story through the gen-tests checklist and the code reviews; ticked 2026-10-16)
 - [x] Final README: setup, run, test, verify, URLs, where to look, how AI was used (2026-10-12)
-- [x] AI usage: the log in `docs/05-ai/ai-usage.md` is complete through every story and summarised in the README
-- [x] Study guides 01-05: frontend foundations plus gRPC runtime and code generation between the two backend services (2026-10-12)
-- [ ] Demo script and walkthrough outline for the interview (parked by the author on 2026-10-12; action item in `docs/04-engineering/backlog.md`)
+- [x] AI usage: summarised in the README and the tooling map
+- [x] Demo script and walkthrough outline for the interview: `docs/00-start-here/05-demo-script.md` (2026-10-16)
 
 ## Next task
 

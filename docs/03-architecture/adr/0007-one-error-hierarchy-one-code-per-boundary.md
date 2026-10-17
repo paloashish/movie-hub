@@ -3,7 +3,6 @@
 | | |
 |---|---|
 | Status | Accepted |
-| Date | 2026-10-09 |
 | Relates to | BRD N2 (feedback: validation errors, failure and retry); every story with an error or validation criterion |
 
 ## Context

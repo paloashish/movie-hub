@@ -30,7 +30,8 @@ description: Write or extend Movie Hub epics and user stories from the BRD into 
 5. No technical detail (no GraphQL, gRPC, table names). Stories describe user-visible behaviour only.
 6. Stretch features (BRD F8) are priority Could. Everything in F1-F7 is Must or Should.
 7. Keep the whole file under two pages. One line per story.
-8. Finish by appending a row to `docs/05-ai/ai-usage.md`.
+8. When the file already exists, existing rows are never changed: IDs, wording and ticks stay as they are, because ADRs, changeset names, tests and commits cite the IDs. Only append new rows or epics for BRD items not yet covered, and end by listing what was added. If everything is covered, say so and change nothing.
+9. Finish by appending a row to the author's private AI usage log (`docs/05-ai/ai-usage.md`, git-ignored).
 
 ## After writing
 Ask the author to review and edit, then run the `reviewer` agent on the file.

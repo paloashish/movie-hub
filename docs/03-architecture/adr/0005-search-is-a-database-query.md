@@ -3,7 +3,6 @@
 | | |
 |---|---|
 | Status | Accepted |
-| Date | 2026-10-09 |
 | Relates to | BRD F6; story E5-S1 |
 
 ## Context

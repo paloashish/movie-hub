@@ -2,8 +2,8 @@
 
 | | |
 |---|---|
-| Version | 0.1 |
-| Status | Reviewed, 12 of 13 findings applied |
+| Version | 0.2 |
+| Status | Reviewed, 12 of 13 findings applied; revalidated against the built screens 2026-10-17 |
 | Date | 2026-10-11 |
 | Inputs | The brief, `docs/01-business/brd.md` (N1, N2, N5), `docs/02-requirements/epics-and-stories.md`, reference images in `docs/00-start-here/brief/reference/` |
 
@@ -67,15 +67,52 @@ List pages, detail pages and forms; one form serves both new and edit. Dotted li
 Text wireframes at desktop width. On a phone the people list stacks into one column, the poster grid keeps two, and side-by-side sections stack.
 
 **Movie grid `/`** (E2-S1, E2-S6, E6-S1)
+
+The home page as regions, coloured by what they are: shell in dark, page header in amber, the data-driven grid in green, controls in indigo. Every other list page has the same shape with its own cards.
+
+```mermaid
+flowchart TB
+    subgraph shell [App shell, every page]
+        direction LR
+        H["Header: Movie Hub, Movies, Cast & Creators, search box"]:::shell
+    end
+    subgraph ph [Page header]
+        direction LR
+        T["h1 Movies"]:::head
+        SO["Sort: Title A to Z, Z to A,<br/>Newest first, Oldest first"]:::ctrl
+        ADD["+ Add movie"]:::ctrl
+    end
+    subgraph grid [Grid: auto-fill, min 10rem per card, 12 per page]
+        direction LR
+        C1["MovieCard<br/>poster 2:3<br/>Title, 2019"]:::card
+        C2["MovieCard<br/>poster 2:3<br/>Title, 2021"]:::card
+        C3["MovieCard<br/>'No poster' placeholder<br/>Title, 1999"]:::card
+        C4["..."]:::card
+    end
+    PG["Pagination: Previous, Page 1 of 2, Next<br/>hidden when one page is enough"]:::ctrl
+    F["Footer: Movie Hub, tagline"]:::shell
+    TO["Toast, bottom centre"]:::ctrl
+    shell --> ph --> grid --> PG --> F
+    C1 -. click .-> MD["/movies/:id"]:::head
+    grid ~~~ TO
+
+    classDef shell fill:#0f172a,stroke:#0f172a,color:#fff
+    classDef head fill:#F59E0B,stroke:#78350F,color:#fff
+    classDef card fill:#10B981,stroke:#064E3B,color:#fff
+    classDef ctrl fill:#4f46e5,stroke:#312E81,color:#fff
 ```
-Movies                        [Sort: Title ▾ (stretch, E6-S1)]  [+ Add movie]
+
+The same page as a text wireframe, for the states the diagram cannot show: the grid region is replaced by `Spinner` while loading, `EmptyState` "No movies yet" when there is nothing, `ErrorState` with Retry on failure.
+
+```
+Movies                     [Sort: Title A to Z ▾]  [+ Add movie]
 ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐
-│poster│ │poster│ │ no   │ │poster│      MovieCard: poster (2:3), title, year
+│poster│ │poster│ │ No   │ │poster│      MovieCard: poster (2:3), title, year
 │      │ │      │ │poster│ │      │      card links to the detail page
 │Title │ │Title │ │Title │ │Title │
 │2019  │ │2021  │ │1999  │ │2024  │
 └──────┘ └──────┘ └──────┘ └──────┘
-                 ‹ 1 2 3 ›                pagination, 12 per page
+        [Previous]  Page 1 of 2  [Next]   pagination, 12 per page, hidden when one page is enough
 ```
 
 **Movie detail `/movies/:id`** (E2-S2, E2-S5, E3-S1 to S3, E4-S1, E4-S2)
@@ -100,7 +137,7 @@ Add a credit   find person [nol__]  role ▾  [Add]        always visible, no to
 Add movie / Edit movie
 Title          [___________________]   validation message under the field
 Release year   [____]
-Synopsis       [___________________]
+Synopsis (optional) [______________]
                [Cancel]  [Save]        Cancel first, Save last at the right edge (as the reference); Save disabled with spinner while saving
 ```
 
@@ -114,15 +151,19 @@ The people behind the movies...
 └─────────────────────┘ └─────────────────────┘
 ```
 
-**Person detail `/people/:id`** (E4-S3, E1-S4) and **Person form** (E1-S2, E1-S3) follow the movie detail and movie form shapes: name and bio, Edit and Delete, then a "Movies" list with the role in each.
+**Person detail `/people/:id`** (E4-S3, E1-S4) and **Person form** (E1-S2, E1-S3) follow the movie detail and movie form shapes: name and bio, Edit and Delete, then a "Movies" list of cards with year and role in each, newest first, "No credits yet" when empty. The form's fields are Name and Bio (optional).
 
 **Search results `/search?q=nolan`** (E5-S1)
 ```
 Results for "nolan"                    SearchBox in the header keeps the text; a new search updates the page
-Movies                                 People
-┌──────┐ ┌──────┐                      - Christopher Nolan  Director
-│poster│ │poster│                      "No people match"
+Movies (2)                             one group under the other (section 8); each heading carries its count
+┌──────┐ ┌──────┐                      MovieCard grid, same cards as the home page; "No movies match" when empty
+│poster│ │poster│
 └──────┘ └──────┘
+People (1)
+┌─────────────────────┐                PersonCard grid, same cards as the people list; "No people match" when empty
+│ (C) Christopher Nolan│               EmptyState "No results for 'nolan'" replaces both groups when both are empty
+└─────────────────────┘
 ```
 
 ## 5. Responsive rules (N1, E5-S2)
@@ -164,3 +205,5 @@ Success is always the toast from section 2, after every create, update, delete, 
 Five images in `docs/00-start-here/brief/reference/` (a poster wall, a grid example, an admin form example, a cast poster and a nine-screen concept) were compared with this doc after it was written. Adopted or confirmed: 2:3 poster cards, "+ Add" top right of each list, Edit and Delete on detail pages, Save and Cancel pairs, the file hint next to Choose file, a one-line footer (built in the frontend foundation), the search box in the header, Back links. Left out on purpose: genre, runtime, ratings, profile images, a role on the person (ours is on the credit, so one person can act in one movie and direct another), upload on the create form (a movie has no ID until saved), tabs for Cast and Creators, a footer with quick links and social icons, a user avatar. None of these are in the brief.
 
 Visual pass (E5-S3, 2026-10-12): the built screens were compared with these wireframes. Two deliberate differences stay: Cast and Creators, and the Movies and People search groups, are stacked instead of side by side, because stacked lists read the same on a phone and a desktop; the poster upload sits under the poster it replaces rather than beside the title. The wireframes above were amended to what is built where they had simply drifted (Cancel before Save, the always-visible credit box, the toast position).
+
+Revalidation (2026-10-17): every screen was compared again with the built routes and components. Three places in the wireframes had drifted and were corrected above: the pagination is Previous, "Page 1 of N", Next rather than numbered pages; the search groups are stacked card grids with counts in their headings; the optional form fields are labelled as such. Everything else matched: the shell, the sort options, the 10rem card minimum, the 640 px breakpoint, the 72rem content width, the toast at the bottom centre, every empty, loading and error text in section 6.

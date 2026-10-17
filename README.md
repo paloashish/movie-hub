@@ -46,7 +46,7 @@ make up        # people-service (gRPC :9090, health :8081), movie-service (:8080
 make down      # stop everything
 ```
 
-The first start creates the databases under `backend/data/` and seeds ten movies with posters, twenty people and their credits. `make reset` deletes that folder so the next start seeds again.
+The first start creates the databases under `backend/data/` and seeds ten movies with posters, twenty people and their credits. Each service also writes its log there, `backend/data/logs/<service>.log`, one JSON line per event, the same lines you see on the console. `make reset` deletes that folder so the next start seeds again.
 
 Without make: `cd backend && ./gradlew :people-service:bootRun`, `./gradlew :movie-service:bootRun`, `cd frontend && npm run dev`.
 
@@ -85,25 +85,46 @@ Start at `docs/00-start-here/README.md`. The documents were written in this orde
 
 | Folder                  | What it holds                                                                                                                          |
 | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| `docs/00-start-here/`   | the brief, the plan with its status, the repo layout and naming rules                                                                  |
+| `docs/00-start-here/`   | the brief, the plan with its status, the repo layout and naming rules, the demo script                                                 |
 | `docs/01-business/`     | one-page business requirements                                                                                                         |
 | `docs/02-requirements/` | six epics, 21 stories with acceptance criteria, all ticked                                                                             |
 | `docs/03-architecture/` | system design, technical architecture with versions, application architecture (data model, contracts, patterns), UI design, seven ADRs |
 | `docs/04-engineering/`  | coding standards, testing strategy, definition of done, foundation checklist, backlog of deferred findings with reasons                |
-| `docs/05-ai/`           | the AI usage log, one row per task                                                                                                     |
-| `docs/06-learning/`     | the author's learning notes and the project journey, a step-by-step record with a diagram                                              |
+| `docs/05-ai/`           | a one-page map of which skill or agent runs at each step, what it reads and what it produces                                           |
 
-Code: `backend/` is a Gradle multi-project with `contracts` (the proto and generated stubs), `common` (error hierarchy, request id), `movie-service` and `people-service`. `frontend/` is the SvelteKit app. Every file is meant to be explainable line by line; comments say why, not what.
+Code: `backend/` is a Gradle multi-project with `contracts` (the proto and generated stubs), `common` (error hierarchy, request id), `movie-service` and `people-service`. `frontend/` is the SvelteKit app. Each of those folders has a short README of its own. `scripts/` holds the verifier and the two Chrome scripts, `compose.yaml` and the two Dockerfiles the optional Docker stack, `.claude/` the agents and skills. Every file is meant to be explainable line by line; comments say why, not what.
 
 ## How AI tools were used
 
-Claude Code was used throughout, as a productivity aid inside a fixed process, never as a replacement for understanding the code. The short version:
+Claude Code was a productivity aid inside a fixed process, never a replacement for understanding the code. Green is AI, orange is the author, blue is a document, grey is a record.
 
-- **Process first.** Brief, then business requirements, then stories, then architecture and ADRs, then a foundation with standards, then the stories one at a time as vertical slices. Each document was drafted with AI, edited by hand, and reviewed by a read-only `reviewer` agent against the documents before it.
-- **One loop per story.** `/ship-story <ID>` implements the story from its acceptance criteria and the design doc, runs `make verify`, launches a `code-reviewer` agent that reruns the verifier and checks the story against the definition of done, then stops: the author decides which findings to apply, and checks the screen in a real browser against a walkthrough card before the story is ticked. Findings not applied go to `docs/04-engineering/backlog.md` with a reason, never dropped.
-- **The tooling is small and in the repo.** A root `CLAUDE.md` with the conventions, two agents and six skills under `.claude/`. Agents and skills are plain Markdown; nothing is hidden.
-- **Everything is logged.** `docs/05-ai/ai-usage.md` has one row per task: how AI was used and what was changed by hand. `docs/06-learning/project-journey.md` is the same story as a diagram and a table, including what each review caught. `docs/06-learning/learning-notes.md` records every concept question asked along the way, with where the answer is applied in the code.
+```mermaid
+flowchart LR
+    subgraph col1 [1. Documents, in order]
+        direction TB
+        Brief[Brief]:::doc --> BRD[BRD]:::doc --> Stories[21 stories]:::doc --> Arch[Architecture<br/>+ 7 ADRs]:::doc --> Found[Foundation<br/>+ standards]:::doc
+        Reviewer([reviewer agent<br/>checks each one]):::ai -.-> Stories
+    end
 
-What the reviews caught is the best evidence the loop is real: a gRPC call with no deadline, a delete that lost the old poster on a disk error, a retry that reloaded the wrong page, a transaction rule proven only against mocks, and a dozen places where two documents disagreed. All are in the log with what was done about them.
+    subgraph col2 [2. One loop per story]
+        direction TB
+        Impl[Implement<br/>+ make verify]:::ai --> Review[code-reviewer<br/>agent]:::ai --> Decide[Author picks<br/>the findings]:::human --> Walk[Author checks<br/>the screen]:::human --> Tick[Story ticked]:::doc
+    end
+
+    subgraph col3 [3. Recorded in the repo]
+        direction TB
+        Plan[02-decisions-and-plan.md<br/>status after every step]:::log
+        Backlog[backlog.md<br/>findings not applied, with a reason]:::log
+    end
+
+    col1 --> col2 --> col3
+
+    classDef doc fill:#3B82F6,stroke:#1E3A8A,color:#fff
+    classDef ai fill:#10B981,stroke:#064E3B,color:#fff
+    classDef human fill:#F59E0B,stroke:#78350F,color:#fff
+    classDef log fill:#64748B,stroke:#1E293B,color:#fff
+```
+
+The tooling is small and in the repo: a root `CLAUDE.md`, two agents and six skills under `.claude/`, all plain Markdown. 
 
 What stayed out on purpose: a search engine, a message broker, authentication, downloaded posters (copyright), and any library the brief did not need. The reasons are in the ADRs and the backlog.

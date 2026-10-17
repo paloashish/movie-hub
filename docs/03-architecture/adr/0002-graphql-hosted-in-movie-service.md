@@ -3,7 +3,6 @@
 | | |
 |---|---|
 | Status | Accepted |
-| Date | 2026-10-09 |
 | Relates to | Brief constraints (BRD section 7: GraphQL between frontend and backend); E1-E5 (every story uses the API) |
 
 ## Context

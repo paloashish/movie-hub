@@ -3,7 +3,6 @@
 | | |
 |---|---|
 | Status | Accepted |
-| Date | 2026-10-09 |
 | Relates to | Brief constraints (BRD section 7: at least two Spring Boot services, gRPC between them); BRD F1-F7; epics E1, E2, E4 |
 
 ## Context

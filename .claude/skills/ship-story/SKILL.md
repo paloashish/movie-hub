@@ -31,7 +31,7 @@ The story loop as one command. It chains the existing pieces; it does not replac
    ```
    One numbered line per acceptance criterion, in the story's words, each with the URL or click and the expected feedback (loading, saving, success, error, confirm). Include the "not found" and error states when the story has them.
 
-6. **Close** - on "ok": `make down`, tick the story in `docs/02-requirements/epics-and-stories.md`, add the rows to `docs/05-ai/ai-usage.md` (story, review), update `docs/00-start-here/02-decisions-and-plan.md` status and `docs/06-learning/project-journey.md` (node, table row, next step), and name the next story. On "step N: ...": treat it as a finding, fix, and go back to step 4.
+6. **Close** - on "ok": `make down`, tick the story in `docs/02-requirements/epics-and-stories.md`, add the rows to the author's private AI usage log (`docs/05-ai/ai-usage.md`, git-ignored) (story, review), update `docs/00-start-here/02-decisions-and-plan.md` status and the author's local journey (git-ignored; node, table row, next step), and name the next story. On "step N: ...": treat it as a finding, fix, and go back to step 4.
 
 ## Rules
 - Each step reports in the step-0 format from CLAUDE.md (what was done, how many files, how to verify, what is next) before the next one starts, so the author can follow along.

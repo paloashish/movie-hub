@@ -4,7 +4,6 @@
 |---|---|
 | Version | 0.1 |
 | Status | Reviewed, draft accepted |
-| Date | 2026-10-09 |
 | Inputs | `system-design.md`, `technical-architecture.md`, `docs/02-requirements/epics-and-stories.md` |
 
 Application architecture answers: what is the data, how is code organised inside each piece, and which patterns does every story reuse. The foundation phase builds exactly what this document says; the `implement-story` skill points here.
@@ -131,7 +130,7 @@ flowchart TB
 
 | Layer | Package | Contains | Rule |
 |-------|---------|----------|------|
-| API | `api.graphql`, `api.http`, `grpc` | Spring for GraphQL `@Controller`s, the poster `@RestController`, the gRPC service implementation | Maps transport to service calls. No business logic |
+| API | `api.graphql`, `api.http`, `grpc` | Spring for GraphQL `@Controller`s with their input and page types (`MovieInput`, `MoviePage`, ...), the poster `@RestController`, the gRPC service implementation | Maps transport to service calls. No business logic. Edge types stay in the edge package; services take plain values |
 | Service | `service` | One class per aggregate: `MovieService`, `CreditService`, `PosterService` in movie-service; `PersonService` in people-service. Services call `PeopleClient` for people data | All rules and validation live here. Throws `AppException` subtypes |
 | Repository | `repository` | Spring Data JPA interfaces | Queries only. Search is `findByTitleContainingIgnoreCase` |
 | Domain | `domain` | JPA entities and enums | Plain data; no behaviour beyond invariants |
@@ -175,6 +174,7 @@ Unexpected exceptions are logged with a stack trace and surfaced as a generic `I
 - A servlet filter in movie-service reads or creates `X-Request-Id`, puts it in MDC, and returns it in the response.
 - A gRPC client interceptor forwards the ID as metadata `x-request-id`; a server interceptor in people-service puts it in MDC.
 - One log line per GraphQL operation, poster upload and gRPC call: operation name, duration, outcome. Errors log the `ErrorCode`; unexpected ones log the stack.
+- Output goes to the console and to a file next to the databases, `backend/data/logs/<service>.log` (in Docker `/data/logs/` inside the service's volume), same JSON lines, rotated by Spring Boot at 10 MB. `make reset` and `make docker-reset` clear the files with the data.
 
 ### 4.4 API discovery
 

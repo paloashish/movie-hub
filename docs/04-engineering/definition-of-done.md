@@ -25,7 +25,7 @@ A story is done when every line below is true. The `implement-story` skill cover
 
 - [ ] Author reviewed and edited the AI draft by hand.
 - [ ] `code-reviewer` agent returned APPROVE, or its findings were applied or consciously declined with a reason.
-- [ ] A row was added to `docs/05-ai/ai-usage.md` naming what AI drafted and what the author changed.
+- [ ] The author can say what AI drafted and what was changed by hand.
 - [ ] Docs touched by the story are updated: the story row marked done, `foundation-checklist.md` or architecture docs if the story changed a pattern.
 - [ ] Once git is in use: one commit per story, Conventional Commits with the story ID.
 

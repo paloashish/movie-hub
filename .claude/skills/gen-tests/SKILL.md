@@ -47,3 +47,4 @@ description: Write unit tests with edge cases for a Movie Hub Kotlin class (JUni
 4. No sleeps, no real network, no real files outside a temp directory.
 5. Run the tests and paste the summary line of the result. Red tests are reported, never hidden.
 6. No `!!` in Kotlin tests; use `requireNotNull`. In page tests stub each expected call with `mockResolvedValueOnce` / `mockRejectedValueOnce` and clean up with the shared `afterEach(cleanup)` in `vitest-setup-client.ts`.
+7. When a test file already exists, add to it. Never delete, weaken or rename a passing test to make room for a new one; if an old test is wrong, say which and why and let the author decide.

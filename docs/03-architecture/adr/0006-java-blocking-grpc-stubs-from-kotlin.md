@@ -3,7 +3,6 @@
 | | |
 |---|---|
 | Status | Accepted |
-| Date | 2026-10-09 |
 | Relates to | Brief constraints (BRD section 7: Kotlin services, gRPC between them) |
 
 ## Context

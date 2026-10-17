@@ -8,6 +8,7 @@ This folder is the entry point for anyone new to the Movie Hub project. Read it 
 | 2 | [02-decisions-and-plan.md](02-decisions-and-plan.md) | The key technical decisions and the phased delivery plan |
 | 3 | [03-repo-layout.md](03-repo-layout.md) | How the repository is organised and why things are named the way they are |
 | 4 | [04-research-notes.md](04-research-notes.md) | Cleaned early notes showing how the first design choices were reached |
+| 5 | [05-demo-script.md](05-demo-script.md) | The interview walkthrough: the app in ten clicks, then the process and code, with likely questions |
 | - | [brief/Technical-Assessment.pdf](brief/Technical-Assessment.pdf) | The original assessment brief |
 | - | [brief/reference/](brief/reference/) | Five reference images used to sanity-check scope and UI design (see research notes section 6) |
 
@@ -31,9 +32,8 @@ docs/
 ├── 01-business/        BRD
 ├── 02-requirements/    epics and user stories
 ├── 03-architecture/    system design, tech arch, app arch, ADRs
-├── 04-engineering/     setup, testing strategy, definition of done
-├── 05-ai/              how AI tools were used
-└── 06-learning/        author's learning journal (concepts explained as they came up)
+├── 04-engineering/     coding standards, testing strategy, definition of done, foundation checklist, backlog
+└── 05-ai/              how AI tools were used: the tooling map
 ```
 
 The original brief is kept unchanged at `docs/00-start-here/brief/Technical-Assessment.pdf`.

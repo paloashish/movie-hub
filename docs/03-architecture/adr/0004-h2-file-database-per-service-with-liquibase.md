@@ -3,7 +3,7 @@
 |            |                                                                                                                                    |
 | ---------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | Status     | Accepted                                                                                                                           |
-| Date       | 2026-10-09                                                                                                                         |
+
 | Relates to | BRD N4 (runs locally with one documented command); the brief's submission section (a README that lets reviewers set up and run it) |
 
 ## Context

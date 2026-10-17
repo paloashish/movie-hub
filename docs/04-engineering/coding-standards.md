@@ -19,6 +19,7 @@ Base: [Spring Boot reference](https://docs.spring.io/spring-boot/reference/).
 - Constructor injection only. No `@Autowired` on fields, no `lateinit` for dependencies.
 - `@ConfigurationProperties` classes for settings; no `@Value` scattered through code.
 - Controllers map transport to a service call and return. No business logic, no repository access.
+- Edge types stay with their edge: GraphQL inputs, page types and custom constraints live in `api.graphql` next to the controllers that use them, not in a `dto` package. Services take plain values, never edge types. Split into subpackages only if an edge grows past a dozen types.
 - One service class per aggregate (`MovieService`, `CreditService`, `PosterService`, `PersonService`). Services throw `AppException` subtypes; nothing else throws to the edge.
 - Repositories are Spring Data interfaces with derived or `@Query` methods. No custom SQL strings in services.
 - Profiles: `local` (default) and `test`. No other profiles, no secrets.

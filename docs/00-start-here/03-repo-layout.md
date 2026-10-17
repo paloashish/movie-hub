@@ -8,20 +8,20 @@ This document records the layout we chose, the alternatives we weighed, and the 
 movie-hub/
 ├── README.md                     setup, run, test, AI usage (the submission README)
 ├── CLAUDE.md                     conventions Claude Code follows in this repo
-├── Makefile                      make up / make test - one-word commands for beginners
-├── .github/workflows/ci.yml      optional: run all tests on push
-├── .claude/
-│   ├── skills/                   write-story, write-adr, gen-tests
-│   └── agents/                   reviewer
+├── Makefile                      make up / make test / make verify - one-word commands for beginners
+├── compose.yaml                  optional Docker stack (make docker-up); Dockerfiles live in backend/ and frontend/
+├── scripts/                      verify.sh (the 50-check verifier), verify-docker.sh, two headless-Chrome scripts
+├── .claude/                      README.md points at the tooling map
+│   ├── skills/                   write-stories, write-adr, implement-story, gen-tests, verify, ship-story
+│   └── agents/                   reviewer (documents), code-reviewer (code)
 ├── docs/
 │   ├── 00-start-here/
 │   ├── 01-business/              brd.md
 │   ├── 02-requirements/          epics-and-stories.md (one file, one table per epic)
 │   ├── 03-architecture/          system-design.md, technical-architecture.md,
 │   │   └── adr/                  application-architecture.md, 0001-domain-split.md ...
-│   ├── 04-engineering/           setup.md, testing-strategy.md, definition-of-done.md
-│   ├── 05-ai/                    ai-usage.md
-│   └── 06-learning/              learning-notes.md (author's journal, Q&A style)
+│   ├── 04-engineering/           coding-standards.md, testing-strategy.md, definition-of-done.md, backlog.md
+│   └── 05-ai/                    ai-tooling-map.md
 ├── backend/                      Gradle multi-project root (Kotlin DSL)
 │   ├── settings.gradle.kts
 │   ├── build.gradle.kts
@@ -29,7 +29,8 @@ movie-hub/
 │   ├── contracts/                .proto files + generated gRPC stubs (shared library)
 │   ├── common/                   AppException, ErrorCode, request-ID filter and gRPC interceptors (shared library)
 │   ├── movie-service/            movies, artwork, credits, GraphQL API, gRPC client
-│   └── people-service/           cast and creators, gRPC server
+│   ├── people-service/           cast and creators, gRPC server
+│   └── data/                     git-ignored: H2 files, posters/ and logs/ written at run time
 ├── frontend/                     SvelteKit + TypeScript
 └── infra/
     └── seed/                     (unused: the sample catalogue lives in each service's 0099 changeset and movie-service/src/main/resources/seed-posters/)
@@ -89,6 +90,7 @@ backend/movie-service/src/main/kotlin/com/moviehub/movie/
 ├── MovieServiceApplication.kt
 ├── api/
 │   ├── graphql/        MovieController.kt, PersonController.kt, SearchController.kt  (Spring for GraphQL controllers)
+│   │                   MovieInput.kt, PersonInput.kt, MoviePage.kt, MaxYearsAhead.kt    (the edge's own types, kept beside their controllers)
 │   └── http/           PosterController.kt                  (multipart upload)
 ├── domain/             Movie.kt, Credit.kt, Role.kt
 ├── repository/         MovieRepository.kt, CreditRepository.kt
